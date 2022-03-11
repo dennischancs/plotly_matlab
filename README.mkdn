@@ -27,9 +27,11 @@ Now, `plotly_matlab` can use latest `plotly.min.js` with `plotly for python`, an
     - kaleido is a tool for convert `plotly image` to `static image(png/jpg/webp, svg/pdf)`.
 
 2. download this master and add to matlab search path
+    - `git clone --depth=1 https://github.com/dennischancs/plotly_matlab`
+	- start matlab, and run `addpath(genpath('your_plotly_matlab_path'));`,  then `savepath`.
 
-3. install [imatlab/imatlab](https://github.com/imatlab/imatlab) kernel for jupyterlab to use matlab 
-    - `imatlab` is a jupyter kernel for matlab  and have a `imatlab_export_fig` function to quick use `plotly_matlab` convert `fig` to `plotly`.
+3. install [dennischancs/imatlab](https://github.com/dennischancs/imatlab/tree/dennischancs-patch-1) kernel for jupyterlab to use matlab 
+    - `imatlab/imatlab` is a jupyter kernel for matlab  and have a `imatlab_export_fig` function to quick use `plotly_matlab` convert `fig` to `plotly`.
     - imatlab v0.4 cannot display CJK character correctly in `stdout`, the solution see [dennischancs/imatlab](https://github.com/dennischancs/imatlab).
 
 ## Examples 1: convert matlab fig to plotly image
