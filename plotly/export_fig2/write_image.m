@@ -161,15 +161,15 @@ if output.code ~= 0
     fprintf('\nError: %s\n',output.message);
 else
     if saveFile
-        if strcmpi(output.format, 'svg')
-            f=fopen(char(filename),'w'); % text
-            fwrite(f,output.result);
+        if strcmpi(imageFormat, 'svg')
+            f=fopen(char(filename),'w');  % text
+            fprintf(f, '%s', output.result);  % text
             fclose(f);
         else
             out=unicode2native(output.result,'UTF-8');
             out=base64decode(out);
-            f=fopen(char(filename),'wb'); % bytes
-            fwrite(f,out);
+            f=fopen(char(filename),'wb');  % bytes
+            fwrite(f,out);  % bytes
             fclose(f);
         end
     else
