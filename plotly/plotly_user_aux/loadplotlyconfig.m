@@ -1,8 +1,8 @@
 function config = loadplotlyconfig()
 
-userhome = getuserdir();
+plotlyDir = getplotlydir();
 
-plotly_config_file = fullfile(userhome,'.plotly','.config');
+plotly_config_file = fullfile(plotlyDir,'.plotly_matlab','.config');
 
 % check if config exist
 if ~exist(plotly_config_file, 'file')

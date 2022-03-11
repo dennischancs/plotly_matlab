@@ -19,9 +19,9 @@ catch
 end
 
 % Create the .plotly folder
-userhome = getuserdir();
+plotlyDir = getplotlydir();
 
-plotly_credentials_folder   = fullfile(userhome,'.plotly');
+plotly_credentials_folder   = fullfile(plotlyDir,'.plotly_matlab');
 plotly_credentials_file = fullfile(plotly_credentials_folder, '.credentials');
 
 [status, mess, messid] = mkdir(plotly_credentials_folder);

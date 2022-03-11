@@ -226,7 +226,7 @@ function updateGeobubble(obj,geoIndex)
 
     %-layout title-%
     if istitle
-      obj.layout.annotations{1}.text = sprintf('<b>%s</b>', geoData.Title);
+      obj.layout.annotations{1}.text = sprintf('<b>%s', geoData.Title);
       obj.layout.annotations{1}.xref = 'paper';
       obj.layout.annotations{1}.yref = 'paper';
       obj.layout.annotations{1}.yanchor = 'top';
@@ -249,7 +249,7 @@ function updateGeobubble(obj,geoIndex)
         obj.layout.legend.font.size = 1.0*geoData.FontSize;
 
         if length(geoData.ColorLegendTitle) > 0
-            obj.layout.legend.title.text = sprintf('<b>%s</b>', geoData.ColorLegendTitle);
+            obj.layout.legend.title.text = sprintf('<b>%s', geoData.ColorLegendTitle);
             obj.layout.legend.title.side = 'top';
             obj.layout.legend.title.font.family = matlab2plotlyfont(geoData.FontName);
             obj.layout.legend.title.font.size = 1.2*geoData.SizeLegendTitle;

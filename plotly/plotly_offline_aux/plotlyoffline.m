@@ -6,17 +6,17 @@ function response = plotlyoffline(plotlyfig)
     % create dependency string unless not required
     if plotlyfig.PlotOptions.IncludePlotlyjs
         % grab the bundled dependencies
-        userHome = getuserdir();
-        plotlyConfigFolder   = fullfile(userHome,'.plotly');
-        plotlyJSFolder = fullfile(plotlyConfigFolder, 'plotlyjs');
-        bundleName = 'plotly-matlab-offline-bundle.js';
+        plotlyDir = getplotlydir();
+        plotlyConfigFolder   = fullfile(plotlyDir,'.plotly_matlab');
+        plotlyJSFolder = fullfile(plotlyDir, 'package_data');  % plotly.min.js in `pythonPath/lib/python3.*/site-packages/plotly/package_data` after command `pip install plotly`
+        bundleName = 'plotly.min.js';
         bundleFile = fullfile(plotlyJSFolder, bundleName);
 
         % check that the bundle exists
         try
             bundle = fileread(bundleFile);
             % template dependencies
-            depScript = sprintf('<script type="text/javascript">%s</script>\n', ...
+            depScript = sprintf('<meta charset="utf-8">\n<script type="text/javascript">%s</script>\n', ...
                 bundle);
         catch
             error(['Error reading: %s.\nPlease download the required ', ...
@@ -33,11 +33,11 @@ function response = plotlyoffline(plotlyfig)
     width = [num2str(plotlyfig.layout.width) 'px']; 
     height = [num2str(plotlyfig.layout.height) 'px']; 
     
-    if plotlyfig.PlotOptions.ShowLinkText
-        linkText = plotlyfig.PlotOptions.LinkText;   
-    else
-        linkText = ''; 
-    end
+    % if plotlyfig.PlotOptions.ShowLinkText
+    %     linkText = plotlyfig.PlotOptions.LinkText;   
+    % else
+    %     linkText = ''; 
+    % end
     
     % format the data and layout
     jData = m2json(plotlyfig.data); 
@@ -48,19 +48,21 @@ function response = plotlyoffline(plotlyfig)
     clean_jFrames = escapechars(jFrames); 
                      
     % template environment vars        
-    plotlyDomain = plotlyfig.UserData.PlotlyDomain;
-    envScript = sprintf(['<script type="text/javascript">', ...
-                          'window.PLOTLYENV=window.PLOTLYENV || {};', ...
-                          'window.PLOTLYENV.BASE_URL="%s";', ...
-                          'Plotly.LINKTEXT="%s";', ...
-                          '</script>'], plotlyDomain, linkText); 
+    % plotlyDomain = plotlyfig.UserData.PlotlyDomain;
+    % envScript = sprintf(['<script type="text/javascript">', ...
+    %                       'window.PLOTLYENV=window.PLOTLYENV || {};', ...
+    %                       'window.PLOTLYENV.BASE_URL="%s";', ...
+    %                       'Plotly.LINKTEXT="%s";', ...
+    %                       '</script>'], plotlyDomain, linkText); 
     
     % template Plotly.plot
-    script = sprintf(['\n Plotly.plot("%s", {\n"data": %s,\n"layout": %s,\n"frames": %s\n}).then(function(){'...
-                      '\n    $(".%s.loading").remove();' ...
-                      '\n    $(".link--embedview").text("%s");'...
-                      '\n    });'], id, clean_jData, clean_jLayout, clean_jFrames,...
-                      id, linkText);
+    script = sprintf(['\n window.PLOTLYENV=window.PLOTLYENV || {}; ', ...
+                      '\n if (document.getElementById("%s")) {', ...
+                      '\n Plotly.newPlot("%s", {\n"data": %s,\n"layout": %s,\n"frames": %s\n}).then(function(){', ...
+                      '\n    var gd = document.getElementById("%s");', ...
+                      '\n    var x = new MutationObserver(function (mutations, observer) {{var display = window.getComputedStyle(gd).display;if (!display || display === "none") {{console.log([gd, "removed!"]);Plotly.purge(gd);observer.disconnect(); }}}}); });', ...
+                      '\n }; '], id, id, clean_jData, clean_jLayout, clean_jFrames,...
+                      id);
 
     plotlyScript = sprintf(['\n<div id="%s" style="height: %s;',...
                              'width: %s;" class="plotly-graph-div">' ...
@@ -69,7 +71,8 @@ function response = plotlyoffline(plotlyfig)
                              script);
     
     % template entire script
-    offlineScript = [depScript envScript plotlyScript]; 
+    % offlineScript = [depScript envScript plotlyScript]; 
+    offlineScript = [depScript plotlyScript]; 
     filename = plotlyfig.PlotOptions.FileName; 
     if iscellstr(filename), filename = sprintf('%s ', filename{:}); end
     
@@ -80,7 +83,7 @@ function response = plotlyoffline(plotlyfig)
     % save the html file in the working directory
     plotlyOfflineFile = fullfile(plotlyfig.PlotOptions.SaveFolder, htmlFilename); 
     fileID = fopen(plotlyOfflineFile, 'w');
-    fprintf(fileID, offlineScript); 
+    fprintf(fileID, '%s', offlineScript); 
     fclose(fileID); 
     
     % remove any whitespace from the plotlyOfflineFile path

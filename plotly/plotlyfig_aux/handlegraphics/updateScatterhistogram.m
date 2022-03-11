@@ -539,7 +539,7 @@ function updateTitle(obj, plotIndex)
     obj.layout.annotations{1}.showarrow = false;
 
     if isTitle
-        titleText = sprintf('<b>%s</b>', parseString(plotData.Title));
+        titleText = sprintf('<b>%s', parseString(plotData.Title));
         titleFamily = matlab2plotlyfont(plotData.FontName);
         xaxis = eval(sprintf('obj.layout.xaxis%d', xSource));
 
@@ -576,7 +576,7 @@ function updateLegend(obj, plotIndex, groupName)
         obj.layout.legend.font.family = fontFamily;
 
         if ~isempty(legTitle) > 0
-            legTitle = sprintf('<b>%s</b>', parseString(legTitle));
+            legTitle = sprintf('<b>%s', parseString(legTitle));
 
             obj.layout.legend.title.text = legTitle;
             obj.layout.legend.title.side = 'top';

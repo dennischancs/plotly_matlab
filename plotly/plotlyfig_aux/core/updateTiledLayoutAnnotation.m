@@ -58,7 +58,7 @@ function obj = updateTiledLayoutAnnotation(obj, tiledLayoutData)
 
     switch titleStruct.FontWeight
         case {'bold','demi'}
-            titleString = sprintf('<b>%s</b>', titleString);
+            titleString = sprintf('<b>%s', titleString);
             obj.layout.annotations{anIndex}.text = titleString;
         otherwise
     end

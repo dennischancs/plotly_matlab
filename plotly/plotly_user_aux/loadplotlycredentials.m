@@ -1,8 +1,8 @@
 function creds = loadplotlycredentials()
 
-userhome = getuserdir();
+plotlyDir = getplotlydir();
 
-plotly_credentials_file = fullfile(userhome,'.plotly','.credentials');
+plotly_credentials_file = fullfile(plotlyDir,'.plotly_matlab','.credentials');
 
 % check if credentials exist
 if ~exist(plotly_credentials_file, 'file')

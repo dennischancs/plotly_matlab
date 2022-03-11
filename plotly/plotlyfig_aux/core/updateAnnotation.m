@@ -94,13 +94,13 @@ end
 if obj.State.Text(anIndex).Title
     obj.layout.annotations{anIndex}.text = parseString(text_data.String,text_data.Interpreter);
     if isempty(text_data.String) 
-        obj.layout.annotations{anIndex}.text = '<b></b>'; %empty string annotation
+        obj.layout.annotations{anIndex}.text = '<b>'; %empty string annotation
     end
 else
     if ~strcmpi(obj.PlotOptions.TreatAs, 'pie3')
         obj.layout.annotations{anIndex}.text = parseString(text_data.String,text_data.Interpreter);
     else
-        obj.layout.annotations{anIndex}.text = '<b></b>'; 
+        obj.layout.annotations{anIndex}.text = '<b>'; 
     end
 end
 
@@ -108,10 +108,10 @@ end
 % if ~strcmpi(obj.PlotOptions.TreatAs, 'pie3')
 %     obj.layout.annotations{anIndex}.text = parseString(text_data.String,text_data.Interpreter);
 %     if obj.State.Text(anIndex).Title && isempty(text_data.String) 
-%         obj.layout.annotations{anIndex}.text = '<b></b>'; %empty string annotation
+%         obj.layout.annotations{anIndex}.text = '<b>'; %empty string annotation
 %     end
 % else
-%     obj.layout.annotations{anIndex}.text = '<b></b>'; 
+%     obj.layout.annotations{anIndex}.text = '<b>'; 
 % end
 
 %-------------------------------------------------------------------------%
@@ -154,7 +154,7 @@ obj.layout.annotations{anIndex}.font.size = text_data.FontSize;
 switch text_data.FontWeight
     case {'bold','demi'}
         %-bold text-%
-        obj.layout.annotations{anIndex}.text = ['<b>' obj.layout.annotations{anIndex}.text '</b>'];
+        obj.layout.annotations{anIndex}.text = ['<b>' obj.layout.annotations{anIndex}.text ''];
     otherwise
 end
 

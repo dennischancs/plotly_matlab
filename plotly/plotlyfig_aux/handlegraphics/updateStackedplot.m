@@ -341,7 +341,7 @@ function updateTitle(obj, titleText, xySource)
     if ~isempty(titleText), titleText = parseString(titleText); end
 
     ann.showarrow = false;
-    ann.text = sprintf('<b>%s</b>', titleText);
+    ann.text = sprintf('<b>%s', titleText);
     ann.xref = 'paper';
     ann.yref = 'paper';
     ann.x = mean(xaxis.domain);

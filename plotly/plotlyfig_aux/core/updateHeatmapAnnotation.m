@@ -75,7 +75,7 @@ obj.layout.annotations{axIndex}.yanchor = 'top';
 %-------------------------------------------------------------------------%
 
 %-text-%
-obj.layout.annotations{axIndex}.text = sprintf('<b>%s</b>', title_name);
+obj.layout.annotations{axIndex}.text = sprintf('<b>%s', title_name);
 obj.layout.annotations{axIndex}.font.size = 14;
 
 %-------------------------------------------------------------------------%

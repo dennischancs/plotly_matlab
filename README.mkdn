@@ -1,3 +1,74 @@
+# Enhanced and fix bugs for  plotly/plotly_matlab - `v.2.2.5`
+
+Now, `plotly_matlab` can use latest `plotly.min.js` with `plotly for python`, and convert to `html with smaller file size` than before by `nbconvert`.
+
+- [x] `plotlyoffline.m`
+  - [x] fix: `Escaped character '\s' is not valid. See 'doc sprintf'`.
+  - [x] fix: CJK garbled character on image.
+  - [x] enhance: use `plotly.min.js` from `plotly.py` which keep latest version( 2022-03-11 is v2.9.0) with new features.
+- [x] new `plotlyoffline2.m`
+  - [x] enhance: shrink ipynb file size. Thanks to the motheds from `plotly.py`.
+    - [x] Generate offline Plotly figure with three layers for better compatibility as ipynb file inserted cell. Three layers: `"application/vnd.plotly.v1+json": {json_compatible_fig_dict}`, `"image/png":"base64"` and `"text/html":"plotly_fig_html"`. Need install [dennischancs/plotly_matlab](https://github.com/dennischancs/plotly_matlab) ![](https://images.weserv.nl?url=https://raw.githubusercontent.com/dennischancs/pic/main/img/202203120246485.png)
+- [x] `write_image.m`
+  - [x] fix: when input `nargin < 4`, the output figure without an extension.
+  - [x] enhance: write static image from matlab_figure_handle `gcf` directly.
+- [x] fix: figure title has more html tag `</b>` or `<\/b>` use the command below. And the incomplete tag `<b>` also work well. see [Issue #474 · plotly/plotly_matlab](https://github.com/plotly/plotly_matlab/issues/474).
+     ```bash
+     sed -i 's#</b>##g' `find /plotly_matlab_toolbox_path/plotly/plotlyfig_aux -name "*.m"`
+     ```
+- [x] new `write_html.m`
+  - [x] enhance: add a New Fuction to write plotly figure to single html file offline and return the html path , usage: `html = write_html(gcf, 'test.html')`.
+  - [x] **Deprecated**: `resp = fig2plotly(gcf,'filename',filename,'offline',1,'strip',0,'open',0); resp.url`.
+
+# Usage
+
+1. `pip install plotly` && `pip install -U kaleido`. see [plotly/plotly.py](https://github.com/plotly/plotly.py)
+    - plotly_matlab is a tool for convert `matlab fig` to `plotly image`.
+    - kaleido is a tool for convert `plotly image` to `static image(png/jpg/webp, svg/pdf)`.
+
+2. download this master and add to matlab search path
+
+3. install [imatlab/imatlab](https://github.com/imatlab/imatlab) kernel for jupyterlab to use matlab 
+    - `imatlab` is a jupyter kernel for matlab  and have a `imatlab_export_fig` function to quick use `plotly_matlab` convert `fig` to `plotly`.
+    - imatlab v0.4 cannot display CJK character correctly in `stdout`, the solution see [dennischancs/imatlab](https://github.com/dennischancs/imatlab).
+
+## Examples 1: convert matlab fig to plotly image
+
+```matlab
+imatlab_export_fig('fig2plotly') % fig2plotly 建议放到代码最前面
+X = linspace(0,2*pi,50)';
+Y = [cos(X), 0.5*sin(X)];
+stem(X,Y);
+title('测试fig2plotly');
+```
+
+![测试fig2plotly结果](https://images.weserv.nl?url=https://raw.githubusercontent.com/dennischancs/pic/main/img/202203100459487.png)
+
+## Examples 2: convert plotly image to static image 
+
+```matlab
+imatlab_export_fig('fig2plotly') % fig2plotly 建议放到代码最前面
+X = linspace(0,2*pi,50)';
+Y = [cos(X), 0.5*sin(X)];
+%fid = figure(); % 没有指定figure句柄，则用系统默认变量gcf
+stem(X,Y);
+title('测试fig2plotly');
+
+% 创建图像目录
+folder = 'images-matlab';
+if ~exist(folder,'dir')
+    mkdir(folder);
+end
+
+filename = [folder, '/', '测试fig2plotly'];
+write_image(gcf, 'svg', filename);
+```
+
+![plotly导出静态图像](https://images.weserv.nl?url=https://raw.githubusercontent.com/dennischancs/pic/main/img/202203100507633.png)
+![测试plotly导出静态图像结果](https://images.weserv.nl?url=https://raw.githubusercontent.com/dennischancs/pic/main/img/202203100508154.svg)
+
+
+-----------
 # Plotly Graphing Library for MATLAB®
 
 > Plotly Graphing Library for MATLAB® - Create interactive charts in your web browser with MATLAB® and Plotly
