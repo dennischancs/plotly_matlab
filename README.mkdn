@@ -8,7 +8,7 @@ Now, `plotly_matlab` can use latest `plotly.min.js` with `plotly for python`, an
   - [x] enhance: use `plotly.min.js` from `plotly.py` which keep latest version( 2022-03-11 is v2.9.0) with new features.
 - [x] new `plotlyoffline2.m`
   - [x] enhance: shrink ipynb file size. Thanks to the motheds from `plotly.py`.
-    - [x] Generate offline Plotly figure with three layers for better compatibility as ipynb file inserted cell. Three layers: `"application/vnd.plotly.v1+json": {json_compatible_fig_dict}`, `"image/png":"base64"` and `"text/html":"plotly_fig_html"`. Need install [dennischancs/plotly_matlab](https://github.com/dennischancs/plotly_matlab) ![](https://images.weserv.nl?url=https://raw.githubusercontent.com/dennischancs/pic/main/img/202203120246485.png)
+    - [x] Generate offline Plotly figure with three layers for better compatibility as ipynb file inserted cell. Three layers: `"application/vnd.plotly.v1+json": {json_compatible_fig_dict}`, `"image/png":"base64"` and `"text/html":"plotly_fig_html"`. Need install [dennischancs/plotly_matlab]https://github.com/dennischancs/imatlab/tree/dennischancs-patch-1) ![](https://images.weserv.nl?url=https://raw.githubusercontent.com/dennischancs/pic/main/img/202203120246485.png)
 - [x] `write_image.m`
   - [x] fix: when input `nargin < 4`, the output figure without an extension.
   - [x] enhance: write static image from matlab_figure_handle `gcf` directly.
