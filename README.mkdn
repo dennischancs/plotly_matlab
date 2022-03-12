@@ -1,4 +1,4 @@
-# Enhanced and fix bugs for  plotly/plotly_matlab - `v.2.2.5`
+# Enhanced and fix bugs for  plotly/plotly_matlab
 
 Now, `plotly_matlab` can use latest `plotly.min.js` with `plotly for python`, and convert to `html with smaller file size` than before by `nbconvert`.
 
